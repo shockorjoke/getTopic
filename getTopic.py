@@ -12,7 +12,7 @@ def createInput():
     #Load the filenames and data from the 20 newsgroups dataset, filter only the body
     newsgroups = fetch_20newsgroups(subset = 'test', remove = ('footers','quotes'))
     with open('newsgroups.txt', 'w') as f:
-        for mail in newsgroups.data[:20]:
+        for mail in newsgroups.data[:100]:
             f.write(mail+'\n\n\n\n\n')
 
     
@@ -32,9 +32,9 @@ def tokenizeInput(textFile):
     textString = inputText.read()
     doc = nlp(textString)     #create token object with Doc
     #lemmatized text and remove stop word and number
-    lemmatizedText=" ".join([token.lemma_ for token in doc if not token.is_stop and not token.like_num])
+    lemmatizedText=" ".join([token.lemma_.lower() for token in doc if not token.is_stop and not token.like_num])
     # filter only unique alphabetic word with vector represented and remove stop word then lemmatized it
-    filterTokenizedWord = set(token.lemma_ for token in doc if not token.is_stop and token.is_alpha and token.has_vector and not token.like_num)
+    filterTokenizedWord = set(token.lemma_.lower() for token in doc if not token.is_stop and token.is_alpha and token.has_vector and not token.like_num)
     return filterTokenizedWord,lemmatizedText
 
 
@@ -190,7 +190,7 @@ print('number of topic and paragraph which share similarity', '\n',categorizedNu
 #extract topic of paragraph based on top 8 common word
 topicDict=extractTopic(wordFrequencyParas, 8)
 #Test the topic 
-print('Check similarity with most comon word for para 2 and 18','\n',topicDict[2],'\n',topicDict[18],'\n')
+print('Check similarity with most comon word for para 73 and 92','\n',topicDict[73],'\n',topicDict[92],'\n')
 
 
 
