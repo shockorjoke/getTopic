@@ -13,7 +13,7 @@ def createInput():
     newsgroups = fetch_20newsgroups(subset = 'test', remove = ('footers','quotes'))
     with open('newsgroups.txt', 'w') as f:
         for mail in newsgroups.data[:100]:
-            f.write(mail+'\n\n\n\n\n')
+            f.write(mail+'\n\n\n\n\n\n\n\n\n\n')
 
     
 def tokenizeInput(textFile):
@@ -50,7 +50,7 @@ def frequencyTokenVector(filterTokenizedWord,lemmatizedText):
     
     frequency_dict=[] #create frequency dict for each paragraph
     
-    paragraphs=lemmatizedText.split('\n\n\n\n\n') #devide text into paragraph
+    paragraphs=lemmatizedText.split('\n\n\n\n\n\n\n\n\n\n') #devide text into paragraph
     for paragraph in paragraphs[:-1]: #excluded the last empty paragraph
         #tokenize paragraph into word token
         wordTokens = paragraph.split()
@@ -184,13 +184,13 @@ filterTokenizedWord,lemmatizedText = tokenizeInput('newsgroups.txt')
 #create word frequency vectors for paragraphs
 wordFrequencyParas=frequencyTokenVector(filterTokenizedWord,lemmatizedText)
 #group paragraph based on cosSim score, idea score 0.5 but sample tend to have lower score
-groupedTopics = groupedTopic(wordFrequencyParas,0.2)
+groupedTopics = groupedTopic(wordFrequencyParas,0.4)
 print('number of topic and paragraph which share similarity', '\n',categorizedNumberOfTopic(groupedTopics),'\n')
 
 #extract topic of paragraph based on top 8 common word
 topicDict=extractTopic(wordFrequencyParas, 8)
 #Test the topic 
-print('Check similarity with most comon word for para 73 and 92','\n',topicDict[73],'\n',topicDict[92],'\n')
+print('Check similarity with most comon word for para 73 and 92','\n',topicDict[46],'\n',topicDict[23],'\n')
 
 
 
